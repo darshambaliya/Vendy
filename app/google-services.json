@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "160523366832",
+    "firebase_url": "https://vendy-b134a.firebaseio.com",
+    "project_id": "vendy-b134a",
+    "storage_bucket": "vendy-b134a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:160523366832:android:3ef5d8babee4db86",
+        "android_client_info": {
+          "package_name": "com.android.vendy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "160523366832-tkudou9hi55qnbv9at56njh72rqj71kc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA7zIWgmB7-W_8hFXJjyCa5sd2b9hjoSA4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "160523366832-tkudou9hi55qnbv9at56njh72rqj71kc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
