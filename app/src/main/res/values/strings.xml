@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">Vendy</string>
+    <string name="app_name">Vendys</string>
+    <string name="info_text_signin">Enter your Information to sign in to Vendy\'s app</string>
 </resources>

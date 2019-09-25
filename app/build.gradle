@@ -31,5 +31,7 @@ dependencies {
     //Firebase
     implementation 'com.google.firebase:firebase-core:16.0.9'
     implementation 'com.google.firebase:firebase-auth:18.1.0'
+    //API HANDLING
+    implementation 'com.squareup.okhttp3:okhttp:4.2.0'
 }
 apply plugin: 'com.google.gms.google-services'
