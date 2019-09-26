@@ -6,12 +6,17 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentTransaction;
 
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.android.vendy.R;
 import com.android.vendy.screens.Fragments.Fragment_SignIn;
 import com.android.vendy.screens.Fragments.Fragment_SignUp;
 import com.google.android.material.tabs.TabLayout;
+
+import static com.android.vendy.Global.PREF_TOKEN;
 
 
 public class MainActivity extends FragmentActivity {
@@ -23,11 +28,14 @@ public class MainActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         signTabLayout = findViewById(R.id.signTab);
 
         fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.fragment_container, new Fragment_SignIn(), "Fragment SignIn");
         fragmentTransaction.commit();
+
+
 
         signTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -42,7 +50,6 @@ public class MainActivity extends FragmentActivity {
                     case 1:
                         fragmentTransaction.replace(R.id.fragment_container, new Fragment_SignUp(), "Fragment SignUp");
                         fragmentTransaction.commit();
-
                         break;
                 }
             }

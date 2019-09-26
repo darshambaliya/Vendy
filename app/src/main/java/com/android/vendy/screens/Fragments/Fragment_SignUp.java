@@ -2,6 +2,7 @@ package com.android.vendy.screens.Fragments;
 
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,7 +21,12 @@ import com.android.vendy.API_Handling.APICall;
 import com.android.vendy.R;
 import com.android.vendy.models.RegistrationModel;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
+
+import static com.android.vendy.Global.PREF_TOKEN;
 
 /**
  * Created by the Sir Anku on 26-09-2019 at 02:49 AM .
@@ -30,6 +36,7 @@ public class Fragment_SignUp extends Fragment {
     private static final String TAG = Fragment_SignUp.class.getSimpleName();
     EditText mobileNo_ET, fname_ET, lname_ET, pwd_ET, cpwd_ET;
     CardView registerBtn;
+    SharedPreferences sharedPreferences;
 
     @Nullable
     @Override
@@ -40,6 +47,10 @@ public class Fragment_SignUp extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        Context context = getActivity();
+        sharedPreferences = context.getSharedPreferences(
+                "myprefs", Context.MODE_PRIVATE);
 
         View view = getView();
 
@@ -95,7 +106,16 @@ public class Fragment_SignUp extends Fragment {
             super.onPostExecute(response);
 
             if (response.contains("success")){
+                SharedPreferences.Editor editor = sharedPreferences.edit();
                 Toast.makeText(getContext(), "Wohoo", Toast.LENGTH_SHORT).show();
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String token = jsonObject.getString("token");
+                    editor.putString(PREF_TOKEN, token);
+                    editor.apply();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }else{
                 Toast.makeText(getContext(), "Something went wrong", Toast.LENGTH_SHORT).show();
             }

@@ -2,6 +2,7 @@ package com.android.vendy.API_Handling;
 
 import android.util.Log;
 
+import com.android.vendy.models.LoginModel;
 import com.android.vendy.models.RegistrationModel;
 import com.google.gson.Gson;
 
@@ -23,6 +24,8 @@ public class APICall {
     private static final String SERVER = "http://f98b0774.ngrok.io/";
 
     private final static String USER_REGISTRATION = "api/register"; //POST
+    private final static String USER_LOGIN = "api/login"; //POST
+
     private static final String TAG = "API HANDLING";
 
 
@@ -51,5 +54,30 @@ public class APICall {
 
         return api_response;
 
+    }
+
+    public static String LoginUser(LoginModel loginModel){
+
+        OkHttpClient client = new OkHttpClient();
+
+        String json_body = new Gson().toJson(loginModel);
+        RequestBody body = RequestBody.create(json_body, TYPE_JSON);
+
+        Request request = new Request.Builder()
+                .url(SERVER + USER_LOGIN)
+                .post(body)
+                .addHeader("content-type", "application/json")
+                .build();
+
+        Response response = null;
+        String api_response = null;
+        try {
+            response = client.newCall(request).execute();
+            api_response = response.body().string();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return api_response;
     }
 }

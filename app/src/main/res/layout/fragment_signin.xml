@@ -30,12 +30,14 @@
          />
 
     <EditText
+        android:id="@+id/mob_noET"
         style="@style/form_edittxt"
         android:layout_marginTop="70dp"
         android:hint="Mobile Number"
         android:inputType="number" />
 
     <EditText
+        android:id="@+id/pwd_ET"
         style="@style/form_edittxt"
         android:hint="Password"
         android:inputType="textPassword" />
@@ -43,6 +45,7 @@
 
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/lognbtn"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:elevation="0dp"
