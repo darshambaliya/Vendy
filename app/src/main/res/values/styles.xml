@@ -24,7 +24,7 @@
         <item name="android:layout_marginStart">50dp</item>
         <item name="android:maxEms">1</item>
         <item name="android:maxLines">1</item>
-        <item name="android:backgroundTint">@color/colorlite</item>
+        <item name="android:backgroundTint">@color/colorPrimaryDark</item>
         <item name="android:textAppearance">@style/form_text</item>
         <item name="android:paddingBottom">14dp</item>
     </style>

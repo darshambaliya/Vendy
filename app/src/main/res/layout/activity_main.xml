@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".screens.MainActivity"
-    android:background="@color/colorPrimary">
+    android:background="@color/colorlite">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -21,7 +21,7 @@
             app:tabIndicatorFullWidth="false"
             app:tabTextColor="#555"
             app:tabSelectedTextColor="@color/colorAccent"
-            app:tabIndicatorColor="@color/colorlite"
+            app:tabIndicatorColor="@color/colorPrimaryDark"
             android:layout_margin="8dp"
             >
 

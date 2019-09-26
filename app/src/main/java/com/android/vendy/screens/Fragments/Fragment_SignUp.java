@@ -97,7 +97,6 @@ public class Fragment_SignUp extends Fragment {
 
             response = APICall.RegisterUser(registrationModel);
 
-
             return response;
         }
 
@@ -107,7 +106,6 @@ public class Fragment_SignUp extends Fragment {
 
             if (response.contains("success")){
                 SharedPreferences.Editor editor = sharedPreferences.edit();
-                Toast.makeText(getContext(), "Wohoo", Toast.LENGTH_SHORT).show();
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     String token = jsonObject.getString("token");
