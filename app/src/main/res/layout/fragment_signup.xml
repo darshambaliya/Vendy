@@ -30,27 +30,33 @@
         />
 
     <EditText
+        android:id="@+id/mob_noET"
         style="@style/form_edittxt"
         android:layout_marginTop="70dp"
         android:hint="Mobile Number"
+        android:maxLength="10"
         android:inputType="number" />
 
     <EditText
+        android:id="@+id/fname_ET"
         style="@style/form_edittxt"
         android:hint="First Name"
         android:inputType="text" />
 
     <EditText
+        android:id="@+id/lname_ET"
         style="@style/form_edittxt"
         android:hint="Last Name"
         android:inputType="text" />
 
     <EditText
+        android:id="@+id/pwd_ET"
         style="@style/form_edittxt"
         android:hint="Password"
         android:inputType="textPassword" />
 
     <EditText
+        android:id="@+id/cpwd_ET"
         style="@style/form_edittxt"
         android:hint="Confirm Password"
         android:inputType="textPassword" />
@@ -73,6 +79,7 @@
 
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/regBtn"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:elevation="0dp"

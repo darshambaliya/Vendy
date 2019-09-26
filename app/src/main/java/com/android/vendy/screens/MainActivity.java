@@ -3,9 +3,9 @@ package com.android.vendy.screens;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentTransaction;
 
 
-import android.app.FragmentTransaction;
 import android.os.Bundle;
 
 import com.android.vendy.R;
@@ -25,14 +25,14 @@ public class MainActivity extends FragmentActivity {
 
         signTabLayout = findViewById(R.id.signTab);
 
-        fragmentTransaction = getFragmentManager().beginTransaction();
+        fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.fragment_container, new Fragment_SignIn(), "Fragment SignIn");
         fragmentTransaction.commit();
 
         signTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                fragmentTransaction = getFragmentManager().beginTransaction();
+                fragmentTransaction = getSupportFragmentManager().beginTransaction();
                 switch (tab.getPosition()) {
 
                     case 0:
