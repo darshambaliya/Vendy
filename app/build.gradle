@@ -36,5 +36,7 @@ dependencies {
     //API HANDLING
     implementation 'com.squareup.okhttp3:okhttp:4.2.0'
     implementation 'com.google.code.gson:gson:2.8.5'
+    //IMAGE HANDLING
+    implementation 'com.github.bumptech.glide:glide:4.10.0'
 }
 apply plugin: 'com.google.gms.google-services'

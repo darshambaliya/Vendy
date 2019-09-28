@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,18 +26,19 @@ public class SplashScreen extends AppCompatActivity {
         SharedPreferences sharedPref = getSharedPreferences("myprefs", Context.MODE_PRIVATE);
 
         final String token = sharedPref.getString(PREF_TOKEN, "");
-        startActivity(new Intent(SplashScreen.this, FillDetails.class)); // for testing
-/*  TODO      new Handler().postDelayed(new Runnable() {
+
+     new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 if (!token.isEmpty()){
-                    startActivity(new Intent(SplashScreen.this, FillDetails.class));
+                    Toast.makeText(SplashScreen.this, "Something went wrong", Toast.LENGTH_SHORT).show();
+                    //startActivity(new Intent(SplashScreen.this, FillDetails.class));
                 }else {
                     startActivity(new Intent(SplashScreen.this, MainActivity.class));
                 }
 
                 finish();
             }
-        },5*100);*/
+        },5*100);
     }
 }
