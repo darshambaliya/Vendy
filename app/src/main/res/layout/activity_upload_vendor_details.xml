@@ -48,6 +48,7 @@
             />
 
         <Button
+            android:id="@+id/uploadBtn"
             android:layout_width="115dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
