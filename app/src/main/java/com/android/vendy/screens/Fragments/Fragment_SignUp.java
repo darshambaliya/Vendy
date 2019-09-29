@@ -4,36 +4,36 @@ package com.android.vendy.screens.Fragments;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
+import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ScrollView;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.AppCompatCheckBox;
 import androidx.cardview.widget.CardView;
-import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.vendy.API_Handling.APICall;
 import com.android.vendy.R;
-import com.android.vendy.adapters.CategoriesListAdapter;
 import com.android.vendy.models.RegistrationModel;
+import com.android.vendy.screens.UploadVendorDetails;
+import com.bumptech.glide.Glide;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
+import java.io.File;
 
+import static android.app.Activity.RESULT_OK;
 import static com.android.vendy.Global.PREF_TOKEN;
 
 /**
@@ -42,13 +42,14 @@ import static com.android.vendy.Global.PREF_TOKEN;
 public class Fragment_SignUp extends Fragment {
 
     private static final String TAG = Fragment_SignUp.class.getSimpleName();
+    private static final int SELECT_IMAGE = 1213;
     EditText mobileNo_ET, fname_ET, lname_ET, pwd_ET, cpwd_ET;
     CardView registerBtn;
     SharedPreferences sharedPreferences;
-    RecyclerView categoriesList;
-    AppCompatCheckBox applyCheckBox;
+    CheckBox applyAsVendorCheckBox;
     Context context;
     View view;
+    ImageView profile_pic;
 
     @Nullable
     @Override
@@ -73,51 +74,53 @@ public class Fragment_SignUp extends Fragment {
         pwd_ET = view.findViewById(R.id.pwd_ET);
         cpwd_ET = view.findViewById(R.id.cpwd_ET);
         registerBtn = view.findViewById(R.id.regBtn);
-        categoriesList = view.findViewById(R.id.categoryGridlist);
-        applyCheckBox = view.findViewById(R.id.applyCB);
+        applyAsVendorCheckBox = view.findViewById(R.id.applyCB);
+        profile_pic = view.findViewById(R.id.pro_pic);
 
         view.findViewById(R.id.select_img).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
-                intent.setAction(Intent.ACTION_PICK);
                 intent.setType("image/*");
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
+                intent.setAction(Intent.ACTION_PICK);
+                startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_IMAGE);
+
             }
         });
-
-        applyCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked){
-                    categoriesList.setLayoutManager(new GridLayoutManager(context,4));
-                    categoriesList.setAdapter(new CategoriesListAdapter(context));
-                    categoriesList.setNestedScrollingEnabled(true);
-                }else {
-                    view.findViewById(R.id.selectCategoryTV).setVisibility(View.GONE);
-                    categoriesList.setVisibility(View.GONE);
-
-                }
-            }
-        });
-
-        if (applyCheckBox.isChecked()){
-
-        }else{
-
-        }
-
-
 
         registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (pwd_ET.getText().toString().equals(cpwd_ET.getText().toString())) {
-                    RegistrationModel registrationModel = new RegistrationModel(mobileNo_ET.getText().toString(),
-                            pwd_ET.getText().toString(),
-                            cpwd_ET.getText().toString());
-                    new RegisterUser(registrationModel).execute();
+
+                    if (applyAsVendorCheckBox.isChecked()){
+
+                        if (pwd_ET.getText().toString().isEmpty())
+                            Toast.makeText(context, "Password must not be empty.", Toast.LENGTH_SHORT).show();
+                        if (mobileNo_ET.getText().toString().isEmpty())
+                            Toast.makeText(context, "Mobile number must not be empty.", Toast.LENGTH_SHORT).show();
+
+                        Intent toUploadVendorDetails = new Intent(context, UploadVendorDetails.class);
+                        toUploadVendorDetails.putExtra("mobile_no", mobileNo_ET.getText().toString());
+                        toUploadVendorDetails.putExtra("password", pwd_ET.getText().toString());
+                        context.startActivity(toUploadVendorDetails);
+                    }else {
+
+                        if (!mobileNo_ET.getText().toString().isEmpty() && !pwd_ET.getText().toString().isEmpty()){
+                            RegistrationModel registrationModel = new RegistrationModel(mobileNo_ET.getText().toString(),
+                                    pwd_ET.getText().toString(),
+                                    cpwd_ET.getText().toString());
+                            new RegisterUser(registrationModel).execute();
+                        }else {
+                            if (pwd_ET.getText().toString().isEmpty())
+                                Toast.makeText(context, "Password must not be empty.", Toast.LENGTH_SHORT).show();
+                            if (mobileNo_ET.getText().toString().isEmpty())
+                                Toast.makeText(context, "Mobile number must not be empty.", Toast.LENGTH_SHORT).show();
+                        }
+
+
+                    }
+
                 } else {
                     Toast.makeText(getContext(), "Password must match.", Toast.LENGTH_LONG).show();
                 }
@@ -130,6 +133,14 @@ public class Fragment_SignUp extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if (data != null && requestCode == SELECT_IMAGE && resultCode == RESULT_OK){
+
+            Uri uri = data.getData();
+            Glide.with(Fragment_SignUp.this)
+                    .load(uri)
+                    .centerCrop()
+                    .into(profile_pic);
+        }
     }
 
     private class RegisterUser extends AsyncTask<String, Void, String> {
