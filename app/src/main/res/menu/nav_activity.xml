@@ -1,0 +1,33 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <group>
+        <!--        <item
+                    android:icon="@drawable/ic_login"
+                    android:title="Login as Vendor" />-->
+        <item
+            android:icon="@drawable/ic_add_to_photos_black_24dp"
+            android:title="Register as Vendor" />
+        <item
+            android:icon="@drawable/ic_account_circle_black_24dp"
+            android:title="My Profile"
+            android:visible="false" />
+
+    </group>
+
+    <item
+        android:icon="@drawable/ic_help"
+        android:title="Need Help?" />
+    <item
+        android:icon="@drawable/ic_feedback"
+        android:title="Feedback" />
+    <item
+        android:icon="@drawable/ic_about"
+        android:title="About Us" />
+    <item
+        android:icon="@drawable/ic_settings"
+        android:title="Settings" />
+    <item
+        android:id="@+id/signOut"
+        android:icon="@drawable/ic_launch_black_24dp"
+        android:title="Sign Out" />
+</menu>

@@ -29,11 +29,19 @@
         android:textColor="@color/colorPrimaryDark"
          />
 
+    <ProgressBar
+        android:id="@+id/prgBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:visibility="gone"/>
+
     <EditText
         android:id="@+id/mob_noET"
         style="@style/form_edittxt"
         android:layout_marginTop="70dp"
         android:hint="Mobile Number"
+        android:maxLength="10"
         android:inputType="number" />
 
     <EditText

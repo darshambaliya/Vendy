@@ -40,7 +40,6 @@
         android:layout_gravity="center">
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/img_holder"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:cardElevation="0dp"
@@ -78,7 +77,6 @@
         android:inputType="number" />
 
     <EditText
-        android:id="@+id/email_ET"
         style="@style/form_edittxt"
         android:hint="Email (Optional)"
         android:inputType="textEmailAddress" />

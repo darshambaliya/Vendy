@@ -2,6 +2,7 @@ package com.android.vendy.screens.Fragments;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -18,10 +20,12 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 
-import com.android.vendy.API_Handling.APICall;
+import com.android.vendy.api_handling.APICall;
 import com.android.vendy.R;
 import com.android.vendy.models.LoginModel;
+import com.android.vendy.screens.MainScreen;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -32,9 +36,12 @@ import static com.android.vendy.Global.PREF_TOKEN;
  */
 public class Fragment_SignIn extends Fragment {
 
+    private static final String TAG = Fragment_SignIn.class.getSimpleName();
     EditText mobileNo_ET, pwd_ET;
     CardView loginBtn;
     SharedPreferences sharedPreferences;
+    Context context;
+    private ProgressBar progressBar;
 
     @Nullable
     @Override
@@ -46,7 +53,7 @@ public class Fragment_SignIn extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        Context context = getActivity();
+        context = getActivity();
         sharedPreferences = context.getSharedPreferences(
                 "myprefs", Context.MODE_PRIVATE);
 
@@ -55,13 +62,19 @@ public class Fragment_SignIn extends Fragment {
         mobileNo_ET = view.findViewById(R.id.mob_noET);
         pwd_ET = view.findViewById(R.id.pwd_ET);
         loginBtn = view.findViewById(R.id.lognbtn);
+        progressBar = view.findViewById(R.id.prgBar);
 
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!mobileNo_ET.getText().toString().isEmpty() && !pwd_ET.getText().toString().isEmpty()){
-                    new GetToken(new LoginModel(mobileNo_ET.getText().toString(),pwd_ET.getText().toString())).execute();
+                if (mobileNo_ET.getText().toString().length() == 10){
+                    if (!mobileNo_ET.getText().toString().isEmpty() && !pwd_ET.getText().toString().isEmpty()){
+                        new GetToken(new LoginModel(mobileNo_ET.getText().toString(),pwd_ET.getText().toString())).execute();
+                    }
+                }else {
+                    Toast.makeText(context, "Enter a valid mobile number.", Toast.LENGTH_SHORT).show();
                 }
+
             }
         });
     }
@@ -71,11 +84,15 @@ public class Fragment_SignIn extends Fragment {
 
         public GetToken(LoginModel loginModel) {
             this.loginModel = loginModel;
+
         }
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            progressBar.setVisibility(View.VISIBLE);
+            loginBtn.setEnabled(false);
+
         }
 
         @Override
@@ -90,12 +107,25 @@ public class Fragment_SignIn extends Fragment {
         @Override
         protected void onPostExecute(String response) {
             super.onPostExecute(response);
+
+            progressBar.setVisibility(View.GONE);
+
+            Log.d(TAG, "onPostExecute: response "+ response);
             SharedPreferences.Editor editor = sharedPreferences.edit();
             try {
                 JSONObject jsonObject = new JSONObject(response);
-                String token = jsonObject.getString("token");
-                editor.putString(PREF_TOKEN, token);
-                editor.apply();
+                if (response.contains("token")){
+                    String token = jsonObject.getString("token");
+                    editor.putString(PREF_TOKEN, token);
+                    editor.apply();
+                    startActivity(new Intent(context, MainScreen.class));
+                    getActivity().overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                }else if (response.contains("non_field_errors")){
+                    Toast.makeText(context, "Incorrect Credentials", Toast.LENGTH_SHORT).show();
+                    editor.clear().apply();
+                    loginBtn.setEnabled(true);
+                }
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }

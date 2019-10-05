@@ -1,35 +1,32 @@
 package com.android.vendy.screens;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentTransaction;
 
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.widget.Toast;
+import android.widget.ProgressBar;
 
 import com.android.vendy.R;
 import com.android.vendy.screens.Fragments.Fragment_SignIn;
 import com.android.vendy.screens.Fragments.Fragment_SignUp;
 import com.google.android.material.tabs.TabLayout;
 
-import static com.android.vendy.Global.PREF_TOKEN;
 
-
-public class MainActivity extends FragmentActivity {
+public class EntranceActivity extends FragmentActivity {
     private TabLayout signTabLayout;
     private FragmentTransaction fragmentTransaction;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_entrance);
 
 
         signTabLayout = findViewById(R.id.signTab);
+
 
         fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.fragment_container, new Fragment_SignIn(), "Fragment SignIn");

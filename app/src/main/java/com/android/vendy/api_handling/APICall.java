@@ -1,4 +1,4 @@
-package com.android.vendy.API_Handling;
+package com.android.vendy.api_handling;
 
 import android.util.Log;
 
@@ -21,7 +21,7 @@ public class APICall {
 
     private static final MediaType TYPE_JSON = MediaType.get("application/json; charset=utf-8");
 
-    private static final String SERVER = "http://f98b0774.ngrok.io/";
+    private static final String SERVER = "https://vendy-api.herokuapp.com/";
 
     private final static String USER_REGISTRATION = "api/register"; //POST
     private final static String USER_LOGIN = "api/login"; //POST

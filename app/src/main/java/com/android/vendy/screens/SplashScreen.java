@@ -31,10 +31,9 @@ public class SplashScreen extends AppCompatActivity {
             @Override
             public void run() {
                 if (!token.isEmpty()){
-                    Toast.makeText(SplashScreen.this, "Something went wrong", Toast.LENGTH_SHORT).show();
-                    //startActivity(new Intent(SplashScreen.this, FillDetails.class));
+                    startActivity(new Intent(SplashScreen.this, MainScreen.class));
                 }else {
-                    startActivity(new Intent(SplashScreen.this, MainActivity.class));
+                    startActivity(new Intent(SplashScreen.this, EntranceActivity.class));
                 }
 
                 finish();
