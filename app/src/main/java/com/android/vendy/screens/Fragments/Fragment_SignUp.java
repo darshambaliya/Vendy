@@ -128,7 +128,6 @@ public class Fragment_SignUp extends Fragment {
                 } else {
                     Toast.makeText(getContext(), "Enter a valid mobile number.", Toast.LENGTH_LONG).show();
                 }
-
             }
         });
 
