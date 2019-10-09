@@ -34,10 +34,11 @@ public class CategoryActivity extends AppCompatActivity {
         categoriesListView.setAdapter(ad);
         categoriesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> adapter, View v, int position, long id) {
-                AlertDialog alert = builder.create();
+                startActivity(new Intent(CategoryActivity.this, MapsMarkerActivity.class));
+                /*AlertDialog alert = builder.create();
                 alert.setTitle("Google Maps API");
                 alert.setMessage("Clicking this will open Google Maps with corresponding vendor markers");
-                alert.show();
+                alert.show();*/
             }
         });
 
