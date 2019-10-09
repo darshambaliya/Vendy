@@ -126,7 +126,7 @@ public class MapsMarkerActivity<locationManager> extends AppCompatActivity
 
     @Override
     public void onLocationChanged(Location location) {
-        Log.d(TAG, "onLocationChanged");
+        Log.d(TAG, "onLocationChanged ");
         updateUI(location);
     }
 
